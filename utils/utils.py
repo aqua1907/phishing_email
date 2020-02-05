@@ -13,6 +13,13 @@ import re
 
 
 def check_email(connection, notification, json_file):
+    """
+
+    :param connection: it is a imbox connection
+    :param notification: get toaster object to call notification
+    :param json_file: get a json file with all data feed
+    :return: pop up windows notification
+    """
     # Two lists for print malicious ips and urls that email has
     malicious_ips = []
     malicious_urls = []
