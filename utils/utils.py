@@ -1,20 +1,44 @@
 import utils.config as cfg
 import re
+import json
+import os
 
 
-# def get_from(from_email):
-#     """
-#     :param from_email: string which has the form : "Name username@mail.com"
-#     :return: email as username@mail.com
-#     """
-#     processed_from_email = from_email.split(" ")[-1].replace("<", r"").replace(">", r"")
-#
-#     return processed_from_email
+def read_pers_info():
+    smtp_server = ""
+    email = ""
+    password = ""
+    refresh_rate = ""
+    if os.path.exists(cfg.pers_inf_json):
+        with open(cfg.pers_inf_json) as json_file:
+            pers_inf = json.load(json_file)
+            smtp_server = pers_inf["smtp_server"]
+            email = pers_inf["email"]
+            password = pers_inf["password"]
+            refresh_rate = pers_inf["refresh_rate"]
+
+        json_file.close()
+
+    return smtp_server, email, password, refresh_rate
+
+
+def create_pers_info(widget):
+    """
+    Create a JSON file from the dictionary "pers_inf"
+    """
+    pers_inf = {"smtp_server": widget.lineEdit.text(),
+                "email": widget.lineEdit_2.text(),
+                "password": widget.lineEdit_3.text(),
+                "refresh_rate": widget.lineEdit_4.text()
+                }
+
+    with open(cfg.pers_inf_json, 'w') as json_file:
+        json.dump(pers_inf, json_file)
+    json_file.close()
 
 
 def check_email(connection, notification, json_file):
     """
-
     :param connection: it is a imbox connection
     :param notification: get toaster object to call notification
     :param json_file: get a json file with all data feed
