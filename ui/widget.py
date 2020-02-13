@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5 import uic
 from imbox import Imbox
 from win10toast import ToastNotifier
+from tensorflow.keras import models
+import pickle
 
 
 class Worker(QObject):
@@ -14,13 +16,15 @@ class Worker(QObject):
     def __init__(self, parent=None):
         QObject.__init__(self, parent=parent)
         self.smtp_server, self.email, self.password, self.refresh_rate = read_pers_info()
+        # Create toaster object for poping up windows notifications
+        self.toaster = ToastNotifier()
+        # Load deep learning model
+        self.model = models.load_model(cfg.spam_detector_path)
+        # Load tokenizer
+        self.tokenizer = pickle.load(open(cfg.tokenizer_path, 'rb'))
+        # Checking unseen emails until close the program
 
     def start_button(self):
-        # Create toaster object for poping up windows notifications
-        toaster = ToastNotifier()
-        # Load all feed data from json file
-        mlui = json.load(open(cfg.phishing_data_feed))
-        # Checking unseen emails until close the program
         while True:
             # Initialise object using "with" statement
             with Imbox(self.smtp_server,  # imap server
@@ -30,9 +34,9 @@ class Worker(QObject):
                        ssl_context=None,
                        starttls=False) as imbox:
                 # Run function that checks email on threat
-                check_email(imbox, toaster, mlui)
+                check_email(imbox, self.toaster, self.model, self.tokenizer)
                 # It is something like refresh rate
-                time.sleep(60 * int(self.refresh_rate))
+                time.sleep(5 * int(self.refresh_rate))
 
 
 class Widget(QWidget):
