@@ -1,0 +1,4 @@
+pyqt5~=5.15.0
+imbox~=0.9.8
+win10toast~=0.9
+tensorflow~=2.2.0
