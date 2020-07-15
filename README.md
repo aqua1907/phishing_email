@@ -6,13 +6,13 @@ namely 100-dimensional ```word2vec``` gives 96% accuracy. However, this model ha
 
 ## Modules
 As a UI I am using ```PyQt5``` module:
-[IMG]()
+[IMG](https://github.com/aqua1907/phishing_email/blob/master/images/Annotation%202020-07-15%20162424.png)
 
 ```Imbox``` — Python library for reading IMAP mailboxes and converting email content to machine readable data. Very convenient 
 module for grabbing e-mails and store data in dictionary format.
 
 ```win10toast``` — Python library for displaying Windows10 Toast Notifications.
-[IMG]()
+[IMG](https://github.com/aqua1907/phishing_email/blob/master/images/Annotation%202020-07-15%20155458.png)
 
 ## Usage
 To start the application execute ```main.py```.
