@@ -1,5 +1,5 @@
 # Application for spam detection
-The desktop application that check your incoming e-mails whether it is spam or not.
+The desktop application that checks your incoming e-mails whether it is spam or not.
 
 A simple TensorFlow sequence model with ```Conv1D``` and ```MaxPooling1D``` layers and pre-trained Embedding matrix, 
 namely 100-dimensional ```word2vec``` gives 96% accuracy. However, this model has high variance because of the lack of the given data.
