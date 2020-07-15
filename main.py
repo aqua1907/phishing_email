@@ -13,7 +13,6 @@ def my_exception_hook(exctype, value, traceback):
 # Set the exception hook to our wrapping function
 sys.excepthook = my_exception_hook
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Widget()
