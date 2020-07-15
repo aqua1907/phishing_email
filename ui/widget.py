@@ -15,19 +15,19 @@ class Worker(QObject):
 
     def __init__(self, parent=None):
         QObject.__init__(self, parent=parent)
-        self.smtp_server, self.email, self.password, self.refresh_rate = read_pers_info()
-        # Create toaster object for poping up windows notifications
+        self.imap_server, self.email, self.password, self.refresh_rate = read_pers_info()
+        # Create toaster object for popping up windows notifications
         self.toaster = ToastNotifier()
         # Load deep learning model
         self.model = models.load_model(cfg.spam_detector_path)
         # Load tokenizer
         self.tokenizer = pickle.load(open(cfg.tokenizer_path, 'rb'))
-        # Checking unseen emails until close the program
 
     def start_button(self):
+        # Checking unseen emails until close the program
         while True:
             # Initialise object using "with" statement
-            with Imbox(self.smtp_server,  # imap server
+            with Imbox(self.imap_server,  # imap server
                        username=self.email,
                        password=self.password,
                        ssl=True,
@@ -36,7 +36,7 @@ class Worker(QObject):
                 # Run function that checks email on threat
                 check_email(imbox, self.toaster, self.model, self.tokenizer)
                 # It is something like refresh rate
-                time.sleep(5 * int(self.refresh_rate))
+                time.sleep(60 * int(self.refresh_rate))
 
 
 class Widget(QWidget):
@@ -47,9 +47,9 @@ class Widget(QWidget):
         # Set window title
         self.setWindowTitle("Spam Detection")
 
-        smtp_server, email, password, refresh_rate = read_pers_info()
+        imap_server, email, password, refresh_rate = read_pers_info()
         # # Fill empty blanks with user personal information if json is exists
-        self.lineEdit.setText(smtp_server)
+        self.lineEdit.setText(imap_server)
         self.lineEdit_2.setText(email)
         self.lineEdit_3.setText(password)
         self.lineEdit_4.setText(refresh_rate)
