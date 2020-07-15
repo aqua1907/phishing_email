@@ -40,7 +40,7 @@
        </font>
       </property>
       <property name="text">
-       <string>SMTP Server</string>
+       <string>IMAP Server</string>
       </property>
      </widget>
     </item>
