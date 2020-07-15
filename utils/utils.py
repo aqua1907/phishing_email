@@ -1,5 +1,4 @@
 import string
-import numpy as np
 import utils.config as cfg
 import re
 import json
@@ -8,28 +7,28 @@ from tensorflow.keras.preprocessing import sequence
 
 
 def read_pers_info():
-    smtp_server = ""
+    imap_server = ""
     email = ""
     password = ""
     refresh_rate = ""
     if os.path.exists(cfg.pers_inf_json):
         with open(cfg.pers_inf_json) as json_file:
             pers_inf = json.load(json_file)
-            smtp_server = pers_inf["smtp_server"]
+            imap_server = pers_inf["imap_server"]
             email = pers_inf["email"]
             password = pers_inf["password"]
             refresh_rate = pers_inf["refresh_rate"]
 
         json_file.close()
 
-    return smtp_server, email, password, refresh_rate
+    return imap_server, email, password, refresh_rate
 
 
 def create_pers_info(widget):
     """
     Create a JSON file from the dictionary "pers_inf"
     """
-    pers_inf = {"smtp_server": widget.lineEdit.text(),
+    pers_inf = {"imap_server": widget.lineEdit.text(),
                 "email": widget.lineEdit_2.text(),
                 "password": widget.lineEdit_3.text(),
                 "refresh_rate": widget.lineEdit_4.text()
